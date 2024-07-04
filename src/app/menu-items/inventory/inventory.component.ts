@@ -4,6 +4,7 @@ import { InventoryItem } from '../../app-logic/inventory-item';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-inventory',
@@ -17,6 +18,7 @@ export class InventoryComponent implements OnInit {
   inventoryItems: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort | undefined;
   inventoryColumns: string[] = [
+    'select',
     'id',
     'name',
     'description',
@@ -24,10 +26,11 @@ export class InventoryComponent implements OnInit {
     'location',
     'inventoryNumber',
     'createdAt',
-
     'modifiedAt',
     'deleted',
   ];
+
+  selection = new SelectionModel<Element>(true, []);
 
   constructor(private inventoryListMockService: InventoryListMockService) {}
 
@@ -37,5 +40,19 @@ export class InventoryComponent implements OnInit {
     );
     this.inventoryItems.paginator = this.paginator;
     this.inventoryItems.sort = this.sort;
+  }
+
+  masterToggle() {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.inventoryItems.data.forEach((row: Element) => {
+          this.selection.select(row);
+        });
+  }
+
+  isAllSelected(): boolean {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.inventoryItems.data.length;
+    return numSelected === numRows;
   }
 }
