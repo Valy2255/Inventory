@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: `inventory`, component: InventoryComponent },
   { path: `scan`, component: ScanComponent },
   { path: `add-item`, component: AddItemComponent },
+  { path: 'edit/:id', component: AddItemComponent },
   { path: `contact`, component: ContactComponent },
 ];
 

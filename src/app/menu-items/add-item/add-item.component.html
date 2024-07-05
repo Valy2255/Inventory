@@ -1,1 +1,95 @@
-<p>add-item works!</p>
+<div class="element-container">
+  <h1>Add inventory item!</h1>
+  <form
+    [formGroup]="addItemForm"
+    (ngSubmit)="onSubmit()"
+    class="form-container"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label> Item name: </mat-label>
+      <input
+        matInput
+        placeHolder="Item name"
+        formControlName="name"
+        type="text"
+        required
+      />
+      <mat-error *ngIf="hasError('name', 'required')">
+        Name is required!
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label> Description: </mat-label>
+      <textarea
+        matInput
+        placeHolder="Item description"
+        formControlName="description"
+        type="text"
+        required
+      ></textarea>
+      <mat-error *ngIf="hasError('description', 'required')">
+        Description is required!
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label> User: </mat-label>
+      <input
+        matInput
+        placeHolder="Username"
+        formControlName="user"
+        type="text"
+        required
+      />
+      <mat-error *ngIf="hasError('user', 'required')">
+        User is required!
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label> Location: </mat-label>
+      <input
+        matInput
+        placeHolder="Location"
+        formControlName="location"
+        type="text"
+        required
+      />
+      <mat-error *ngIf="hasError('location', 'required')">
+        Location is required!
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label> Inventory Number:</mat-label>
+      <input
+        matInput
+        placeHolder="Inventory number"
+        formControlName="inventoryNumber"
+        type="number"
+        required
+      />
+      <mat-error *ngIf="hasError('inventoryNumber', 'required')">
+        Inventory number is required!
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label class="form-div-text"> Created At:</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        placeholder="Created At"
+        formControlName="createdAt"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="hasError('createdAt', 'required')">
+        Date is required!
+      </mat-error>
+    </mat-form-field>
+
+    <button type="submit" [disabled]="!addItemForm.valid">Submit</button>
+  </form>
+</div>

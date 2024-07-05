@@ -28,6 +28,7 @@ export class InventoryComponent implements OnInit {
     'createdAt',
     'modifiedAt',
     'deleted',
+    'action',
   ];
 
   selection = new SelectionModel<Element>(true, []);

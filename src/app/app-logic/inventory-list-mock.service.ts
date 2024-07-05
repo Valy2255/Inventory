@@ -124,4 +124,21 @@ export class InventoryListMockService {
   getData(): Array<InventoryItem> {
     return this.inventoryData;
   }
+
+  addItem(item: InventoryItem) {
+    this.inventoryData.push(item);
+  }
+
+  getLastId(): number {
+    return Math.max.apply(
+      Math,
+      this.inventoryData.map(function (o) {
+        return o.id;
+      })
+    );
+  }
+
+  getItemId(id: number) {
+    return this.inventoryData.filter((item) => item.id == id)[0];
+  }
 }
