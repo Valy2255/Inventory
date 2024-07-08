@@ -15,7 +15,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-
+import { QrCodeModule } from 'ng-qrcode';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   declarations: [AppComponent, RoutingComponents],
   imports: [
@@ -32,6 +34,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
+    QrCodeModule,
+    NgxScannerQrcodeModule,
+    MatButtonModule,
   ],
   providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],

@@ -1,0 +1,43 @@
+<div class="container">
+  <div>
+    <div *ngIf="!itemFound">Item not found!</div>
+    <ng-container *ngIf="itemFound">
+      <h2>Item Information</h2>
+      <div class="item-details">
+        <div>
+          <strong>Id:</strong> <span>{{ item.id }}</span>
+        </div>
+        <div>
+          <strong>Name:</strong> <span>{{ item.name }}</span>
+        </div>
+        <div>
+          <strong>Description:</strong> <span>{{ item.description }}</span>
+        </div>
+        <div>
+          <strong>User:</strong> <span>{{ item.user }}</span>
+        </div>
+        <div>
+          <strong>Location:</strong> <span>{{ item.location }}</span>
+        </div>
+        <div>
+          <strong>Inventory Number:</strong>
+          <span>{{ item.inventoryNumber }}</span>
+        </div>
+        <div>
+          <strong>Created At:</strong> <span>{{ item.createdAt | date }}</span>
+        </div>
+        <div>
+          <strong>Modified At:</strong>
+          <span>{{ item.modifiedAt | date }}</span>
+        </div>
+        <div>
+          <strong>Status:</strong>
+          <span>{{ item.deleted ? "Deleted" : "Active" }}</span>
+        </div>
+      </div>
+      <button mat-icon-button (click)="edit()">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </ng-container>
+  </div>
+</div>

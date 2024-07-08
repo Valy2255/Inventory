@@ -141,4 +141,11 @@ export class InventoryListMockService {
   getItemId(id: number) {
     return this.inventoryData.filter((item) => item.id == id)[0];
   }
+
+  deleteItem(id: number) {
+    const index = this.inventoryData.findIndex((item) => item.id == id);
+    if (index !== -1) {
+      this.inventoryData[index].deleted = true;
+    }
+  }
 }

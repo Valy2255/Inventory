@@ -28,7 +28,7 @@ mat-toolbar {
   flex: 1 1 auto;
 }
 
-a[mat-button].nav-button {
+a[mat-raised-button].nav-button {
   text-decoration: none;
   color: #673ab7; /* Purple color to match the toolbar */
   background-color: white;

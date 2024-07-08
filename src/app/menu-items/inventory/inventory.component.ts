@@ -56,4 +56,13 @@ export class InventoryComponent implements OnInit {
     const numRows = this.inventoryItems.data.length;
     return numSelected === numRows;
   }
+
+  delete(id: number) {
+    this.inventoryListMockService.deleteItem(id);
+    this.inventoryItems = new MatTableDataSource<InventoryItem>(
+      this.inventoryListMockService.getData()
+    );
+    this.inventoryItems.paginator = this.paginator;
+    this.inventoryItems.sort = this.sort;
+  }
 }

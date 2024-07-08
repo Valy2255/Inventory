@@ -1,3 +1,16 @@
 table {
     width: 100%;
 }
+
+.editButton {
+    background-color: rgb(59, 196, 59);
+    border-radius: 10px;
+    color:white;
+    margin-right: 5px;
+}
+
+.deleteButton {
+    background-color: red;
+    border-radius: 10px;
+    color:white
+}

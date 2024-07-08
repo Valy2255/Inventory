@@ -1,1 +1,16 @@
-<p>scan works!</p>
+<div class="centered">
+  <div class="camera">
+    <ngx-scanner-qrcode
+      #action="scanner"
+      (event)="onEvent($event, action)"
+    ></ngx-scanner-qrcode>
+    <button
+      class="video-cam"
+      mat-button
+      (click)="action.isStart ? action.stop() : action.start()"
+    >
+      <mat-icon>videocam</mat-icon>
+      {{ action.isStart ? "Stop" : "Start" }}
+    </button>
+  </div>
+</div>

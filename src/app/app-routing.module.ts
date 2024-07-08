@@ -5,6 +5,7 @@ import { InventoryComponent } from './menu-items/inventory/inventory.component';
 import { ScanComponent } from './menu-items/scan/scan.component';
 import { AddItemComponent } from './menu-items/add-item/add-item.component';
 import { ContactComponent } from './menu-items/contact/contact.component';
+import { ShowItemComponent } from './menu-items/show-item/show-item.component';
 
 const routes: Routes = [
   { path: ``, component: HomePageComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: `add-item`, component: AddItemComponent },
   { path: 'edit/:id', component: AddItemComponent },
   { path: `contact`, component: ContactComponent },
+  { path: `item/:id`, component: ShowItemComponent },
 ];
 
 @NgModule({
@@ -27,4 +29,5 @@ export const RoutingComponents = [
   ScanComponent,
   AddItemComponent,
   ContactComponent,
+  ShowItemComponent,
 ];

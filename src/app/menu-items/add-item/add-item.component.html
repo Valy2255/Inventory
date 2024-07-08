@@ -1,5 +1,8 @@
 <div class="element-container">
   <h1>Add inventory item!</h1>
+  <div class="qr-code-container" *ngIf="itemId">
+    <qr-code [value]="itemId.toString()" size="150"></qr-code>
+  </div>
   <form
     [formGroup]="addItemForm"
     (ngSubmit)="onSubmit()"
