@@ -36,11 +36,12 @@ export class InventoryComponent implements OnInit {
   constructor(private inventoryListMockService: InventoryListMockService) {}
 
   ngOnInit(): void {
-    this.inventoryItems = new MatTableDataSource<InventoryItem>(
-      this.inventoryListMockService.getData()
-    );
-    this.inventoryItems.paginator = this.paginator;
-    this.inventoryItems.sort = this.sort;
+    this.inventoryListMockService.getData().subscribe((data) => {
+      this.inventoryItems = new MatTableDataSource<InventoryItem>(data);
+      this.inventoryItems.paginator = this.paginator;
+      this.inventoryItems.sort = this.sort;
+      console.log(this.inventoryItems);
+    });
   }
 
   masterToggle() {
@@ -53,16 +54,19 @@ export class InventoryComponent implements OnInit {
 
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
-    const numRows = this.inventoryItems.data.length;
+    const numRows =
+      this.inventoryItems && this.inventoryItems.data
+        ? this.inventoryItems.data.length
+        : 0;
     return numSelected === numRows;
   }
 
   delete(id: number) {
     this.inventoryListMockService.deleteItem(id);
-    this.inventoryItems = new MatTableDataSource<InventoryItem>(
-      this.inventoryListMockService.getData()
-    );
-    this.inventoryItems.paginator = this.paginator;
-    this.inventoryItems.sort = this.sort;
+    this.inventoryListMockService.getData().subscribe((data) => {
+      this.inventoryItems = new MatTableDataSource<InventoryItem>(data);
+      this.inventoryItems.paginator = this.paginator;
+      this.inventoryItems.sort = this.sort;
+    });
   }
 }

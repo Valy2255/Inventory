@@ -18,6 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { QrCodeModule } from 'ng-qrcode';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+
 @NgModule({
   declarations: [AppComponent, RoutingComponents],
   imports: [
@@ -37,8 +39,9 @@ import { MatButtonModule } from '@angular/material/button';
     QrCodeModule,
     NgxScannerQrcodeModule,
     MatButtonModule,
+    HttpClientModule,
   ],
-  providers: [provideAnimationsAsync()],
+  providers: [provideAnimationsAsync(), provideHttpClient()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

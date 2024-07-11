@@ -27,7 +27,9 @@ export class ShowItemComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.item = this.inventoryListMockService.getItemId(this.itemId);
+    this.inventoryListMockService.getItemId(this.itemId).subscribe((data) => {
+      this.item = data;
+    });
     this.itemFound = this.item ? true : false;
   }
 

@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { InventoryItem } from './inventory-item';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InventoryListMockService {
+  apiUrl = 'http://localhost:5266/api/InventoryItem';
   private inventoryData: Array<InventoryItem> = [
     {
       id: 1001,
@@ -119,14 +122,19 @@ export class InventoryListMockService {
     },
   ];
 
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
 
-  getData(): Array<InventoryItem> {
-    return this.inventoryData;
+  getData(): Observable<Array<InventoryItem>> {
+    var inventoryList: Array<InventoryItem> = new Array();
+    return this.httpClient.get<Array<InventoryItem>>(this.apiUrl);
   }
 
   addItem(item: InventoryItem) {
-    this.inventoryData.push(item);
+    var result;
+    this.httpClient.post<InventoryItem>(this.apiUrl, item).subscribe((data) => {
+      result = data;
+      console.log(result);
+    });
   }
 
   getLastId(): number {
@@ -139,13 +147,20 @@ export class InventoryListMockService {
   }
 
   getItemId(id: number) {
-    return this.inventoryData.filter((item) => item.id == id)[0];
+    return this.httpClient.get<InventoryItem>(this.apiUrl + '/' + id);
   }
 
   deleteItem(id: number) {
-    const index = this.inventoryData.findIndex((item) => item.id == id);
-    if (index !== -1) {
-      this.inventoryData[index].deleted = true;
-    }
+    this.httpClient.delete(this.apiUrl + '/' + id).subscribe((data) => {
+      console.log(data);
+    });
+  }
+
+  updateItem(item: InventoryItem) {
+    var result;
+    this.httpClient.put<InventoryItem>(this.apiUrl, item).subscribe((data) => {
+      result = data;
+      console.log(result);
+    });
   }
 }

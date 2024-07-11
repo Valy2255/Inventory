@@ -32,52 +32,69 @@ export class AddItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.item =
-      this.itemId == 0
-        ? new InventoryItem()
-        : this.inventoryListMockService.getItemId(this.itemId);
+    this.activatedRoute.params.subscribe((params) => {
+      this.itemId = +params['id'] || 0;
 
+      if (this.itemId !== 0) {
+        this.inventoryListMockService
+          .getItemId(this.itemId)
+          .subscribe((item) => {
+            this.item = item;
+            this.initForm();
+          });
+      } else {
+        this.item = new InventoryItem();
+        this.initForm();
+      }
+    });
+  }
+
+  private initForm(): void {
     this.addItemForm = this.formBuilder.group({
       name: [this.item.name, Validators.required],
       description: [
         this.item.description,
-        Validators.maxLength(100) && Validators.required,
+        [Validators.required, Validators.maxLength(100)],
       ],
       user: [this.item.user, Validators.required],
       location: [this.item.location, Validators.required],
       inventoryNumber: [this.item.inventoryNumber, Validators.required],
       createdAt: [
-        this.item.createdAt?.toISOString().split('T')[0],
+        this.item.createdAt?.toString().split('T')[0],
         Validators.required,
       ],
     });
   }
 
   onSubmit() {
-    if (this.itemId == 0) {
-      this.item = new InventoryItem(this.addItemForm.value);
-      this.item.modifiedAt = new Date();
-      this.item.deleted = false;
-      this.item.id = this.inventoryListMockService.getLastId() + 1;
-      this.inventoryListMockService.addItem(this.item);
+    if (!this.addItemForm.valid) {
+      return;
+    }
+
+    const formValues = this.addItemForm.value;
+    const item = new InventoryItem({
+      ...formValues,
+      createdAt: new Date(formValues.createdAt),
+      modifiedAt: new Date(),
+      deleted: false,
+      id: this.itemId || undefined,
+    });
+
+    if (this.itemId === 0) {
+      this.inventoryListMockService.addItem(item);
       this.router.navigate(['/inventory']);
     } else {
-      this.item.name = this.addItemForm.value.name;
-      this.item.description = this.addItemForm.value.description;
-      this.item.user = this.addItemForm.value.user;
-      this.item.location = this.addItemForm.value.location;
-      this.item.inventoryNumber = this.addItemForm.value.inventoryNumber;
-      this.item.createdAt = new Date(this.addItemForm.value.createdAt);
-      this.item.modifiedAt = new Date();
-      this.item.deleted = false;
-      this.inventoryListMockService.addItem(this.item);
+      this.inventoryListMockService.updateItem(item);
+      this.router.navigate(['/inventory']);
     }
-    this.router.navigate(['/inventory']);
   }
 
   hasError(controlName: string, errorName: string) {
-    return this.addItemForm.controls[controlName].hasError(errorName);
+    return (
+      this.addItemForm &&
+      this.addItemForm.controls[controlName] &&
+      this.addItemForm.controls[controlName].hasError(errorName)
+    );
   }
-
   //
 }

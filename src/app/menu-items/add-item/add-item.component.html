@@ -4,6 +4,7 @@
     <qr-code [value]="itemId.toString()" size="150"></qr-code>
   </div>
   <form
+    *ngIf="addItemForm && item"
     [formGroup]="addItemForm"
     (ngSubmit)="onSubmit()"
     class="form-container"
